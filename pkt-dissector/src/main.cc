@@ -2,6 +2,7 @@
 #include "srsran/common/common_helper.h"
 #include "srsran/srsran.h"
 #include "srsran/version.h"
+#include "pkt-dissector/hdr/constants.h"
 #include <unistd.h>
 #include <iostream>
 
@@ -16,6 +17,7 @@ int main(int argc, char* argv[])
                  // ? srslog::create_stdout_sink()
                  // : srslog::create_file_sink(args.log.filename, fixup_log_file_maxsize(args.log.file_max_size));
   log_sink = srslog::create_stdout_sink();
+
   if (!log_sink) {
     return SRSRAN_ERROR;
   }
@@ -30,7 +32,10 @@ int main(int argc, char* argv[])
   srslog::init();
 
   srslog::fetch_basic_logger("ALL").set_level(srslog::basic_levels::warning);
-  srsran::log_args(argc, argv, "MAIN");
+  srsran::log_args(argc, argv, "ARGS");
+  srslog::basic_logger& main_logger = srslog::fetch_basic_logger("MAIN");
+  main_logger.info(GREEN "HELLO WORLD!!!" GREEN);
+
 
   std::cout << "---  exiting  ---" << std::endl;
   return SRSRAN_SUCCESS;
